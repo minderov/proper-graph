@@ -31,6 +31,10 @@ class Graph {
 		return this.nodes[value];
 	}
 
+	areConnected(fromVal, toVal) {
+		return this.shortestPath(fromVal, toVal).length > 0;
+	}
+
 	shortestPath(fromVal, toVal) {
 		// TODO: check if the nodes exist
 		// TODO: check if the shortest path was already calculated

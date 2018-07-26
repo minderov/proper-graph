@@ -60,5 +60,43 @@ describe('Graph', function() {
 			assert.equal(g.shortestPath("3", "7").length, 4);
 		});
 	});
-	
+
+	describe('#areConnected', function() {
+		it('should return false when nodes are not connected', function() {
+			const notConnectedPairs = [
+				["1", "3"],
+				["1", "8"],
+				["2", "8"],
+				["999", "8"],
+				["999", "1000"],
+				["2", "5"],
+				["5", "2"],
+				["7", "1"]
+			];
+
+			for (let i = 0; i < notConnectedPairs.length; i++) {
+				const pair = notConnectedPairs[i];
+
+				assert.equal(g.areConnected(pair[0], pair[1]), false);
+			}
+		});
+
+		it('should return true when nodes are connected', function() {
+			const connectedPairs = [
+				["1", "2"],
+				["5", "8"],
+				["3", "8"],
+				["5", "7"],
+				["2", "1"],
+				["5", "3"],
+				["3", "5"]
+			];
+
+			for (let i = 0; i < connectedPairs.length; i++) {
+				const pair = connectedPairs[i];
+
+				assert.equal(g.areConnected(pair[0], pair[1]), true);
+			}
+		});
+	});
 });
