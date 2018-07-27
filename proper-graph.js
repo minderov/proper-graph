@@ -66,45 +66,16 @@ class Graph {
 
 		const from = this.nodes[fromVal];
 
-		// TODO: implement a proper queue		
-		const visitedNodes = {};
 		const pathTo = {};
-		const parentOf = {};
 		pathTo[from.value] = [from];
-		visitedNodes[from.value] = true;
 
-		let queue = from.adjacentNodes();
-
-		queue.forEach(function(n) {
-			parentOf[n.value] = from.value;
-		});
-
-		while (queue.length > 0) {
-			const node = queue.shift();
-
-			if (visitedNodes[node.value]) {
-				continue;
-			}
-
-			visitedNodes[node.value] = true;
-			
-			const pathToNode = pathTo[parentOf[node.value]];
+		for (const node of this.BFS(from.value)) {
+			const pathToNode = node.parent ? pathTo[node.parent.value] : [];
 			pathTo[node.value] = pathToNode.concat(node);
 
 			if (node.value === toVal) {
 				return pathTo[node.value];
 			}
-
-			let adjacentNodes = node.adjacentNodes();
-			adjacentNodes = adjacentNodes.filter(function(n) {
-				return !visitedNodes[n.value];
-			});
-
-			adjacentNodes.forEach(function(n) {
-				parentOf[n.value] = parentOf[n.value] ? parentOf[n.value] : node.value;
-			});
-
-			queue = queue.concat(adjacentNodes);
 		}
 
 		return [];
