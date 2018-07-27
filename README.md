@@ -1,4 +1,4 @@
-# Proper Graph ![Build Status](https://travis-ci.org/minderov/proper-graph.svg?branch=master)
+# Proper Graph <a href="http://travis-ci.org/minderov/proper-graph"><img src="https://travis-ci.org/minderov/proper-graph.svg?branch=master" alt="Build Status"></a>
 > A library that aims to make graphs easy to use
 
 ## Install
