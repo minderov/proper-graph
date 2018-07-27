@@ -35,6 +35,31 @@ class Graph {
 		return this.shortestPath(fromVal, toVal).length > 0;
 	}
 
+	* BFS(fromVal) {
+		const from = this.nodes[fromVal];
+
+		const visitedNodes = {};
+
+		// TODO: implement a proper queue
+		let queue = [from];
+
+		while (queue.length > 0) {
+			const node = queue.shift();
+
+			if (visitedNodes[node.value]) {
+				continue;
+			}
+
+			visitedNodes[node.value] = true;
+
+			yield node;
+
+			const adjacentNodes = node.adjacentNodes();
+			adjacentNodes.map(n => n.parent = node);
+			queue = queue.concat(adjacentNodes);
+		}
+	}
+
 	shortestPath(fromVal, toVal) {
 		// TODO: check if the nodes exist
 		// TODO: check if the shortest path was already calculated

@@ -49,15 +49,45 @@ describe('Graph', function() {
 	
 	describe('#shortestPath', function() {
 		it('should return empty array if there is no possible path', function() {
-			assert.equal(g.shortestPath("1", "999").length, 0);
-			assert.equal(g.shortestPath("1000", "999").length, 0);
-			assert.equal(g.shortestPath("1", "3").length, 0);
+			const tests = function() {
+				assert.equal(g.shortestPath("1", "999").length, 0);
+				assert.equal(g.shortestPath("1000", "999").length, 0);
+				assert.equal(g.shortestPath("1", "3").length, 0);
+			};
+
+			tests();
+			tests();
 		});
 
 		it('should return correct shortest path if it exists', function() {
 			assert.equal(g.shortestPath("1", "2").length, 2);
 			assert.equal(g.shortestPath("3", "5").length, 2);
 			assert.equal(g.shortestPath("3", "7").length, 4);
+		});
+	});
+
+	describe('#*BFS', function() {
+		it('should return a correct sequence', function() {
+			const correctSequenceFrom = {
+				"1": ["1", "2"],
+				"2": ["2", "1"],
+				"3": ["3", "4", "5", "6", "7", "8"],
+				"4": ["4", "3", "5", "6", "7", "8"],
+				"5": ["5", "4", "3", "6", "7", "8"],
+				"6": ["6", "5", "7", "4", "3", "8"]
+			};
+
+			for (from in correctSequenceFrom) {
+				const sequence = correctSequenceFrom[from];
+				let i = 0;
+
+				for (node of g.BFS(from)) {
+					assert.equal(node.value, sequence[i++]);
+				}
+
+				assert.equal(i, sequence.length, "*BFS() did not list all the nodes");
+			}
+
 		});
 	});
 
