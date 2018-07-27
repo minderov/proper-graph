@@ -67,11 +67,11 @@ class Graph {
 		const from = this.nodes[fromVal];
 
 		const pathTo = {};
-		pathTo[from.value] = [from];
+		pathTo[from.value] = [from.value];
 
 		for (const node of this.BFS(from.value)) {
 			const pathToNode = node.parent ? pathTo[node.parent.value] : [];
-			pathTo[node.value] = pathToNode.concat(node);
+			pathTo[node.value] = pathToNode.concat(node.value);
 
 			if (node.value === toVal) {
 				return pathTo[node.value];
