@@ -3,7 +3,7 @@
     "test": "mocha"
   },
   "name": "proper-graph",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A library that aims to make graphs easy to use",
   "main": "proper-graph.js",
   "dependencies": {},
