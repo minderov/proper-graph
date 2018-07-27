@@ -16,12 +16,14 @@ const g = new Graph();
 g.addNode("3"); // node can be a string or a number
 g.addNode("4");
 g.addNode("5");
+// g: ("3") ("4") ("5")
 
 // add edges 3-4 and 4-5
 g.addEdge("3", "4");
 g.addEdge("4", "5");
+// g: ("3")-("4")-("5")
 
-g.shortestPath("3", "5"); // returns an array of size 3 with nodes "3", "4", "5"
+g.shortestPath("3", "5"); // returns an array of size 3 with nodes ["3", "4", "5"]
 ```
 
 ## Methods
@@ -34,7 +36,8 @@ const g = new Graph();
 
 g.addNode(1);
 g.addNode("Alice");
-// the graph now looks like (1) ("Alice") where the nodes are not connected
+// g: (1) ("Alice")
+// note that the nodes are not connected
 ```
 
 
@@ -50,6 +53,9 @@ g.addNode("2");
 g.addNode("3");
 
 g.addEdge("1", "2");
+// nodes "1" and "2" are now connected
+// g: ("1")-("2") ("3") 
+// note that the node "3" is not connected to the rest
 ```
 
 
@@ -66,7 +72,8 @@ g.addNode("3");
 
 g.addEdge("1", "2");
 // nodes "1" and "2" are now connected, 
-// so the graph looks like ("1")-("2") ("3") where node "3" is not connected to the rest
+// g: ("1")-("2") ("3") 
+// note that the node "3" is not connected to the rest
 
 g.areConnected("1", "2"); // returns true
 g.areConnected("2", "3"); // returns false
@@ -81,6 +88,7 @@ Example:
 const g = new Graph();
 
 g.addNode("Alice");
+// g: ("Alice")
 
 g.contains("Alice"); // returns true
 g.contains("Bob");  // returns false
@@ -106,7 +114,7 @@ g.addEdge("3", "4");
 g.addEdge("4", "5");
 g.addEdge("1", "5");
 
-// The graph looks like:
+// g:
 // ("1")-("2")
 //   |      \
 //   |     ("3")
@@ -139,7 +147,7 @@ g.addEdge("3", "4");
 g.addEdge("4", "5");
 g.addEdge("1", "5");
 
-// The graph looks like:
+// g:
 // ("1")-("2")
 //   |      \
 //   |     ("3")
