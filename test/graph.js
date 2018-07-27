@@ -114,6 +114,53 @@ describe('Graph', function() {
 		});
 	});
 
+	describe('#containsEdge', function() {
+		it('should return true if the edge exists', function() {
+                        assert.equal(g.containsEdge("1", "2"), true);
+
+                        assert.equal(g.containsEdge("3", "4"), true);
+
+                        assert.equal(g.containsEdge("3", "5"), true);
+
+                        assert.equal(g.containsEdge("4", "5"), true);
+
+                        assert.equal(g.containsEdge("6", "7"), true);
+
+                        assert.equal(g.containsEdge("7", "8"), true);
+                });
+
+                it('should return true if the reverse edge exists', function() {
+                        assert.equal(g.containsEdge("2", "1"), true);
+
+                        assert.equal(g.containsEdge("4", "3"), true);
+
+                        assert.equal(g.containsEdge("5", "3"), true);
+
+                        assert.equal(g.containsEdge("5", "4"), true);
+
+                        assert.equal(g.containsEdge("7", "6"), true);
+
+                        assert.equal(g.containsEdge("8", "7"), true);
+                });
+
+                it('should return false if the edge does not exist', function() {
+                        assert.equal(g.containsEdge("1", "3"), false);
+                        assert.equal(g.containsEdge("3", "1"), false);
+
+                        assert.equal(g.containsEdge("3", "6"), false);
+                        assert.equal(g.containsEdge("6", "3"), false);
+
+                        assert.equal(g.containsEdge("5", "8"), false);
+                        assert.equal(g.containsEdge("8", "5"), false);
+
+                        assert.equal(g.containsEdge("5", "999"), false);
+                        assert.equal(g.containsEdge("999", "5"), false);
+
+                        assert.equal(g.containsEdge("1000", "999"), false);
+                        assert.equal(g.containsEdge("999", "1000"), false);
+                });
+	});
+
 	describe('#areConnected', function() {
 		it('should return false when nodes are not connected', function() {
 			const notConnectedPairs = [

@@ -31,6 +31,10 @@ class Graph {
 		return !!this.nodes[value];
 	}
 
+	containsEdge(fromVal, toVal) {
+		return this.edges.contains(fromVal, toVal);
+	}
+
 	getNodeByValue(value) {
 		return this.nodes[value];
 	}
