@@ -1,4 +1,4 @@
-const Graph = require('./proper-graph.js');
+const Graph = require('../src/graph.js');
 const assert = require('assert');
 
 describe('Graph', function() {
