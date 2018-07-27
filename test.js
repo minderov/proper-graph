@@ -60,9 +60,32 @@ describe('Graph', function() {
 		});
 
 		it('should return correct shortest path if it exists', function() {
-			assert.equal(g.shortestPath("1", "2").length, 2);
-			assert.equal(g.shortestPath("3", "5").length, 2);
-			assert.equal(g.shortestPath("3", "7").length, 4);
+			const correctPaths = [
+				{
+					from: "1",
+					to: "2",
+					path: ["1", "2"]
+				},
+				{
+					from: "3",
+					to: "5",
+					path: ["3", "5"]
+				},
+				{
+					from: "3",
+					to: "7",
+					path: ["3", "5", "6", "7"]
+				},
+
+			];
+
+			for (let i = 0; i < correctPaths.length; i++) {
+				const from = correctPaths[i].from;
+				const to = correctPaths[i].to;
+				const path = correctPaths[i].path;
+
+				assert.deepEqual(g.shortestPath(from, to), path);
+			}
 		});
 	});
 
