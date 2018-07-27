@@ -60,7 +60,7 @@ g.addEdge("1", "2");
 
 
 ### `.areConnected(tag1, tag2)`
-Returns `true` if there is a path between the nodes, and false otherwise.
+Returns `true` if there is a path between the nodes, and `false` otherwise.
 
 Example:
 ```javascript
@@ -81,7 +81,7 @@ g.areConnected("2", "3"); // returns false
 
 
 ### `.contains(tag)`
-Returns `true` if there is a node with tag `tag`, and false otherwise.
+Returns `true` if there is a node with tag `tag`, and `false` otherwise.
 
 Example:
 ```javascript
@@ -120,7 +120,6 @@ g.addEdge("1", "5");
 //   |     ("3")
 //   |      /
 // ("5")-("4")
-//    
    
 g.shortestPath("1", "5"); // returns ["1", "5"]
 g.shortestPath("1", "4"); // returns ["1", "5", "4"]
@@ -129,7 +128,7 @@ g.shortestPath("1", "3"); // returns ["1", "2", "3"]
 
 
 ### `.containsEdge(tag1, tag2)`
-Returns `true` if the graph has an edge between the two nodes, and false otherwise
+Returns `true` if the graph has an edge between the two nodes, and `false` otherwise
 
 Example:
 ```javascript
@@ -153,7 +152,6 @@ g.addEdge("1", "5");
 //   |     ("3")
 //   |      /
 // ("5")-("4")
-//
 
 g.containsEdge("1", "2"); // returns true
 g.containsEdge("2", "1"); // returns true
