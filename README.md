@@ -27,8 +27,8 @@ g.shortestPath("3", "5"); // returns an array of size 3 with nodes ["3", "4", "5
 ```
 
 ## Methods
-### `.addNode(tag)`
-Adds the node `tag` to the graph. `tag` is a string or a number that will uniquely identify the node.
+### `.addNode(node)`
+Adds `node` to the graph. `node` is a string or a number that will uniquely identify the node.
 
 Example:
 ```javascript
@@ -41,8 +41,8 @@ g.addNode("Alice");
 ```
 
 
-### `.addEdge(tag1, tag2)`
-Adds an edge between the two tags
+### `.addEdge(node1, node2)`
+Adds an edge between the two nodes
 
 Example:
 ```javascript
@@ -59,7 +59,7 @@ g.addEdge("1", "2");
 ```
 
 
-### `.areConnected(tag1, tag2)`
+### `.areConnected(node1, node2)`
 Returns `true` if there is a path between the nodes, and `false` otherwise.
 
 Example:
@@ -80,8 +80,8 @@ g.areConnected("2", "3"); // returns false
 ```
 
 
-### `.contains(tag)`
-Returns `true` if there is a node with tag `tag`, and `false` otherwise.
+### `.contains(node)`
+Returns `true` if the node `node` exists in the graph, and `false` otherwise.
 
 Example:
 ```javascript
@@ -95,7 +95,7 @@ g.contains("Bob");  // returns false
 ```
 
 
-### `.shortestPath(tag1, tag2)`
+### `.shortestPath(node1, node2)`
 Returns an array that contains the nodes that comprise the shortest path between the two nodes.
 
 Example:
@@ -127,7 +127,7 @@ g.shortestPath("1", "3"); // returns ["1", "2", "3"]
 ```
 
 
-### `.containsEdge(tag1, tag2)`
+### `.containsEdge(node1, node2)`
 Returns `true` if the graph has an edge between the two nodes, and `false` otherwise
 
 Example:
@@ -164,8 +164,8 @@ g.containsEdge("2", "4"); // returns false
 ```
 
 
-### `.BFS(fromTag)`
-A generator that iterates over every node that is connected to node with tag `fromTag`
+### `.BFS(fromNode)`
+A generator that iterates over every node that is connected to `node`
 
 Example:
 ```javascript
