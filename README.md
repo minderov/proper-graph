@@ -96,7 +96,7 @@ g.contains("Bob");  // returns false
 
 
 ### `.shortestPath(node1, node2)`
-Returns an array that contains the nodes that comprise the shortest path between the two nodes.
+Returns an object that contains the nodes that comprise the shortest path between the two nodes, and the path's length.
 
 Example:
 ```javascript
@@ -107,6 +107,7 @@ g.addNode("2");
 g.addNode("3");
 g.addNode("4");
 g.addNode("5");
+g.addNode("77");
 
 g.addEdge("1", "2");
 g.addEdge("2", "3");
@@ -119,11 +120,32 @@ g.addEdge("1", "5");
 //   |      \
 //   |     ("3")
 //   |      /
-// ("5")-("4")
+// ("5")-("4")     ("77")
    
-g.shortestPath("1", "5"); // returns ["1", "5"]
-g.shortestPath("1", "4"); // returns ["1", "5", "4"]
-g.shortestPath("1", "3"); // returns ["1", "2", "3"]
+const path = g.shortestPath("1", "5"); 
+// path: {
+	nodes: ["1", "5"],
+	length: 2
+}
+
+g.shortestPath("1", "4"); 
+// path: {
+	nodes: ["1", "5", "4"],
+	length: 3
+}
+
+g.shortestPath("1", "3"); 
+// path: {
+	nodes: ["1", "2", "3"],
+	length: 3
+}
+
+// note that there is no path between the nodes "1" and "77"
+g.shortestPath("1", "77");
+// path: {
+	nodes: [],
+	length: undefined
+}
 ```
 
 
