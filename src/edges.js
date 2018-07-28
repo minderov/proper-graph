@@ -15,7 +15,7 @@ class Edges {
 		this.edges[edge.hash].push(edge);
 	}
 
-	contains(fromVal, toVal) {
+	getPossibleHashes(fromVal, toVal) {
 		const possibleHashes = [
 		{
 			hash: (new Edge(fromVal, toVal)).hash,
@@ -27,6 +27,42 @@ class Edges {
 			from: toVal,
 			to: fromVal
 		}];
+
+		return possibleHashes;
+	}
+
+	// removes an edge, return false if the edge didn't exist, and true otherwise
+	remove(fromVal, toVal) {
+		let found = false;
+
+		const possibleHashes = this.getPossibleHashes(fromVal, toVal);
+
+		for (let i = 0; i < possibleHashes.length; i++) {
+			const hash = possibleHashes[i].hash;
+			const from = possibleHashes[i].from;
+			const to = possibleHashes[i].to;
+
+			if (!this.edges[hash]) {
+				continue;
+			}
+
+			for (let k = 0; k < this.edges[hash].length; k++) {
+				const edge = this.edges[hash][k];
+
+				if (edge.from === from && edge.to === to) {
+					found = true;
+
+					// remove the edge
+					this.edges[hash].splice(k, 1);
+				}
+			}
+		}
+
+		return found;
+	}
+
+	contains(fromVal, toVal) {
+		const possibleHashes = this.getPossibleHashes(fromVal, toVal);
 
 		for (let i = 0; i < possibleHashes.length; i++) {
 			const hash = possibleHashes[i].hash;
