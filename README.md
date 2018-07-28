@@ -23,7 +23,7 @@ g.addEdge("3", "4");
 g.addEdge("4", "5");
 // g: ("3")-("4")-("5")
 
-g.shortestPath("3", "5"); // returns an array of size 3 with nodes ["3", "4", "5"]
+g.shortestPath("3", "5"); // returns { nodes: ["3", "4", "5"], length: 3 }
 ```
 
 ## Methods
