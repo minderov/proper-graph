@@ -5,15 +5,15 @@ const Edges = require('./edges.js');
 class Graph {
 	constructor() {
 		this.edges = new Edges();
-		this.nodes = {};
+		this.nodes = new Map();
 		this.shortestPaths = {};
 	}
 
 	addEdge(fromVal, toVal) {
 		// TODO: check if edge already exists
 		// TODO: check if nodes exist?
-		const from = this.nodes[fromVal];
-		const to = this.nodes[toVal];
+		const from = this.nodes.get(fromVal);
+		const to = this.nodes.get(toVal);
 
 		this.edges.add(new Edge(fromVal, toVal));
 
@@ -24,11 +24,11 @@ class Graph {
 	addNode(value) {
 		// TODO: check if node already exists
 
-		this.nodes[value] = new Node(value);
+		this.nodes.set(value, new Node(value));
 	}
 
 	contains(value) {
-		return !!this.nodes[value];
+		return this.nodes.has(value);
 	}
 
 	containsEdge(fromVal, toVal) {
@@ -36,7 +36,7 @@ class Graph {
 	}
 
 	getNodeByValue(value) {
-		return this.nodes[value];
+		return this.nodes.get(value);
 	}
 
 	areConnected(fromVal, toVal) {
@@ -44,7 +44,7 @@ class Graph {
 	}
 
 	* BFS(fromVal) {
-		const from = this.nodes[fromVal];
+		const from = this.nodes.get(fromVal);
 
 		const visitedNodes = {};
 
@@ -72,7 +72,7 @@ class Graph {
 		// TODO: check if the nodes exist
 		// TODO: check if the shortest path was already calculated
 
-		const from = this.nodes[fromVal];
+		const from = this.nodes.get(fromVal);
 
 		const pathTo = {};
 		pathTo[from.value] = [from.value];
