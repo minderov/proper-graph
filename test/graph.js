@@ -46,6 +46,24 @@ describe('Graph', function() {
 			});
 		});
 	});
+
+	describe('#contains', function() {
+		it('should return true if the node exists', function() {
+			const existingNodes = ["1", "2", "3", "4", "5", "6", "7", "8", "999", "1000"];
+
+			for (let i = 0; i < existingNodes.length; i++) {
+				assert.equal(g.contains(existingNodes[i]), true);
+			}
+		});
+
+		it('should return false if the node exists', function() {
+			const notExistingNodes = ["0", "33", "50", 1, 5, 999, ""];
+
+			for (let i = 0; i < notExistingNodes.length; i++) {
+				assert.equal(g.contains(notExistingNodes[i]), false);
+			}
+		});
+	});
 	
 	describe('#shortestPath', function() {
 		it('should return empty array if there is no possible path', function() {
