@@ -131,8 +131,8 @@ path = g.shortestPath("1", "5");
 
 path = g.shortestPath("1", "4"); 
 // path: {
-//	    nodes: ["1", "5", "4"],
-//	    length: 3
+//     nodes: ["1", "5", "4"],
+//     length: 3
 // }
 
 path = g.shortestPath("1", "3"); 
