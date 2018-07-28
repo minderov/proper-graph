@@ -5,7 +5,7 @@
   "name": "proper-graph",
   "version": "1.1.0",
   "description": "A library that aims to make graphs easy to use",
-  "main": "proper-graph.js",
+  "main": "src/graph.js",
   "dependencies": {},
   "devDependencies": {
     "mocha": "^5.2.0"
