@@ -82,11 +82,17 @@ class Graph {
 			pathTo[node.value] = pathToNode.concat(node.value);
 
 			if (node.value === toVal) {
-				return pathTo[node.value];
+				return {
+					nodes: pathTo[node.value],
+					length: pathTo[node.value].length
+				}
 			}
 		}
 
-		return [];
+		return {
+			nodes: [],
+			length: undefined
+		};
 	}
 }
 

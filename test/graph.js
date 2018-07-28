@@ -66,15 +66,31 @@ describe('Graph', function() {
 	});
 	
 	describe('#shortestPath', function() {
-		it('should return empty array if there is no possible path', function() {
-			const tests = function() {
-				assert.equal(g.shortestPath("1", "999").length, 0);
-				assert.equal(g.shortestPath("1000", "999").length, 0);
-				assert.equal(g.shortestPath("1", "3").length, 0);
-			};
+		it('should return object with empty array and undefined length if there is no possible path', function() {
+			const emptyPaths = [
+				{
+					from: "1",
+					to: "999"
+				},
+				{
+					from: "1000",
+					to: "999",
+				},
+				{
+					from: "1",
+					to: "3"
+				}
+			];
 
-			tests();
-			tests();
+			for (let i = 0; i < emptyPaths; i++) {
+				const from = emptyPaths[i].from;
+				const to = emptyPaths[i].to;
+
+				const path = g.shortestPath(from, to);
+
+				assert.deepEqual(path.nodes, []);
+				assert.equal(path.length, undefined);
+			}
 		});
 
 		it('should return correct shortest path if it exists', function() {
@@ -82,17 +98,20 @@ describe('Graph', function() {
 				{
 					from: "1",
 					to: "2",
-					path: ["1", "2"]
+					nodes: ["1", "2"],
+					length: 2
 				},
 				{
 					from: "3",
 					to: "5",
-					path: ["3", "5"]
+					nodes: ["3", "5"],
+					length: 2
 				},
 				{
 					from: "3",
 					to: "7",
-					path: ["3", "5", "6", "7"]
+					nodes: ["3", "5", "6", "7"],
+					length: 4
 				},
 
 			];
@@ -100,9 +119,13 @@ describe('Graph', function() {
 			for (let i = 0; i < correctPaths.length; i++) {
 				const from = correctPaths[i].from;
 				const to = correctPaths[i].to;
-				const path = correctPaths[i].path;
+				const nodes = correctPaths[i].nodes;
+				const length = correctPaths[i].length;
 
-				assert.deepEqual(g.shortestPath(from, to), path);
+				const path = g.shortestPath(from, to);
+
+				assert.deepEqual(path.nodes, nodes);
+				assert.equal(path.length, length);
 			}
 		});
 	});
