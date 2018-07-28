@@ -15,7 +15,7 @@ class Graph {
 		const from = this.nodes.get(fromVal);
 		const to = this.nodes.get(toVal);
 
-		this.edges.add(new Edge(fromVal, toVal));
+		this.edges.add(fromVal, toVal);
 
 		from.addEdgeTo(to);
 		to.addEdgeTo(from);

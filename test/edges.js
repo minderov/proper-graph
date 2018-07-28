@@ -6,8 +6,8 @@ describe('Edges', function() {
 	const edges = new Edges();
 
 	beforeEach(function() {
-		edges.add(new Edge("1", "2"));
-		edges.add(new Edge("2", "3"));
+		edges.add("1", "2");
+		edges.add("2", "3");
 	});
 
 	describe('#contains', function() {

@@ -5,7 +5,9 @@ class Edges {
 		this.edges = {};
 	}
 	
-	add(edge) {
+	add(fromVal, toVal) {
+		const edge = new Edge(fromVal, toVal);
+
 		if (!this.edges[edge.hash]) {
 			this.edges[edge.hash] = [];
 		}
