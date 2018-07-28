@@ -121,30 +121,31 @@ g.addEdge("1", "5");
 //   |     ("3")
 //   |      /
 // ("5")-("4")     ("77")
-   
-const path = g.shortestPath("1", "5"); 
+
+let path;
+path = g.shortestPath("1", "5"); 
 // path: {
-//	nodes: ["1", "5"],
-//	length: 2
+//     nodes: ["1", "5"],
+//     length: 2
 // }
 
-g.shortestPath("1", "4"); 
+path = g.shortestPath("1", "4"); 
 // path: {
-//	nodes: ["1", "5", "4"],
-//	length: 3
+//	    nodes: ["1", "5", "4"],
+//	    length: 3
 // }
 
-g.shortestPath("1", "3"); 
+path = g.shortestPath("1", "3"); 
 // path: {
-// 	nodes: ["1", "2", "3"],
-// 	length: 3
+//     nodes: ["1", "2", "3"],
+//     length: 3
 // }
 
 // note that there is no path between the nodes "1" and "77"
-g.shortestPath("1", "77");
+path = g.shortestPath("1", "77");
 // path: {
-// 	nodes: [],
-// 	length: undefined
+//     nodes: [],
+//     length: undefined
 // }
 ```
 
@@ -214,7 +215,7 @@ g.addEdge("1", "5");
 // ("5")-("4")      ("77")
    
 for (const node of g.BFS("1")) {
-  console.log(`Node: ${node}`);
+   console.log(`Node: ${node}`);
 }
 
 // Output:
