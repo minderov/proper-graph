@@ -4,7 +4,7 @@ const assert = require('assert');
 describe('Graph', function() {
 	let g;
 
-	beforeEach(function() {
+	before(function() {
 		g = new Graph();
 		
 		g.addNode("1");
@@ -239,5 +239,72 @@ describe('Graph', function() {
 				assert.equal(g.areConnected(pair[0], pair[1]), true);
 			}
 		});
+	});
+
+	describe('#removeEdge', function() {
+		const existingEdgesToRemove = [
+			{
+				from: "1",
+				to: "2",
+			},
+			{
+				from: "3",
+				to: "4",
+			},
+			{
+				from: "8",
+				to: "7",
+			},
+			{
+				from: "3",
+				to: "5",
+			},
+			{
+				from: "5",
+				to: "6",
+			},
+		];
+
+		it('should return false if the edge did not exist', function() {
+                        assert.equal(g.removeEdge("1", "3"), false);
+
+                        assert.equal(g.removeEdge("3", "1"), false);
+
+                        assert.equal(g.removeEdge("3", "6"), false);
+
+                        assert.equal(g.removeEdge("5", "8"), false);
+
+                        assert.equal(g.removeEdge("999", "1000"), false);
+
+                        assert.equal(g.removeEdge("1", "nonExistent"), false);
+
+                        assert.equal(g.removeEdge("nonExistent1", "nonExistent2"), false);
+
+                        assert.equal(g.removeEdge("1", "1"), false);
+                });
+
+                it('should return true if the edge did exist', function() {
+			for (let i = 0; i < existingEdgesToRemove.length; i++) {
+				const edge = existingEdgesToRemove[i];
+
+				assert.equal(g.removeEdge(edge.from, edge.to), true);
+			}
+                });
+
+                it('edge should not exist after its removal', function() {
+			for (let i = 0; i < existingEdgesToRemove.length; i++) {
+				const edge = existingEdgesToRemove[i];
+
+				assert.equal(g.containsEdge(edge.from, edge.to), false);
+			}
+                });
+
+                it('should return false for freshly removed edges', function() {
+			for (let i = 0; i < existingEdgesToRemove.length; i++) {
+				const edge = existingEdgesToRemove[i];
+
+				assert.equal(g.removeEdge(edge.from, edge.to), false);
+			}
+                });
 	});
 });
