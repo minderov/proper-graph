@@ -95,6 +95,56 @@ g.contains("Bob");  // returns false
 ```
 
 
+### `.removeNode(node)`
+Removes the node. Returns `false` if the node does not exist, and `true` otherwise.
+Also removes all the edges incident to the node.
+
+Example:
+```javascript
+const g = new Graph();
+
+g.addNode("1");
+g.addNode("2");
+g.addNode("3");
+g.addNode("4");
+g.addNode("5");
+
+g.addEdge("1", "2");
+g.addEdge("2", "3");
+g.addEdge("3", "4");
+g.addEdge("4", "5");
+g.addEdge("1", "5");
+
+// g:
+// ("1")-("2")
+//   |      \
+//   |     ("3")
+//   |      /
+// ("5")-("4")
+
+g.removeNode("1"); // returns true
+
+// g:
+//       ("2")
+//          \
+//         ("3")
+//          /
+// ("5")-("4")
+
+g.removeNode("1"); // returns false because the node does not exist anymore
+
+g.addNode("1");
+
+// now after we added the node back, the edges previosly incident to the node don't exist anymore
+// g:
+// ("1") ("2")
+//          \
+//         ("3")
+//          /
+// ("5")-("4")
+```
+
+
 ### `.shortestPath(node1, node2)`
 Returns an object that contains the nodes that comprise the shortest path between the two nodes, and the path's length.
 
