@@ -4,7 +4,7 @@ const assert = require('assert');
 describe('Graph', function() {
 	let g;
 
-	before(function() {
+	function resetGraph() {
 		g = new Graph();
 		
 		g.addNode("1");
@@ -27,6 +27,10 @@ describe('Graph', function() {
 		g.addNode("999");
 		g.addNode("1000");
 
+	}
+
+	before(function() {
+		resetGraph();
 	});
 
 	describe('#getNodeByValue', function() {
@@ -241,6 +245,66 @@ describe('Graph', function() {
 		});
 	});
 
+	describe('#removeNode', function() {
+		const existingNodesToRemove = ["1", "3", "5", "8", "999"];
+
+		before(function() {
+			resetGraph();
+		});
+
+		it('should return false if the node did not exist', function() {
+			const nonExistentNodes = ["0", "nonExistent", 1, 999];
+
+			for (let i = 0; i < nonExistentNodes.length; i++) {
+				assert.equal(g.removeNode(nonExistentNodes[i]), false);
+			}
+		});
+
+		it('should return true if the node did exist', function() {
+			for (let i = 0; i < existingNodesToRemove.length; i++) {
+				assert.equal(g.removeNode(existingNodesToRemove[i]), true);
+			}
+		});
+
+		it('graph should not contain deleted nodes', function() {
+			for (let i = 0; i < existingNodesToRemove.length; i++) {
+				assert.equal(g.contains(existingNodesToRemove[i]), false);
+			}
+		});
+
+		it('should return false for freshly deleted nodes', function() {
+			for (let i = 0; i < existingNodesToRemove.length; i++) {
+				assert.equal(g.removeNode(existingNodesToRemove[i]), false);
+			}
+		});
+
+		it('graph should still contain other nodes', function() {
+			const leftoverNodes = ["2", "4", "6", "7", "1000"];
+
+			for (let i = 0; i < leftoverNodes.length; i++) {
+				assert.equal(g.contains(leftoverNodes[i]), true);
+			}
+		});
+
+		it('graph should not contains edges with deleted nodes', function() {
+			assert.equal(g.containsEdge("1", "2"), false);
+			assert.equal(g.containsEdge("3", "5"), false);
+			assert.equal(g.containsEdge("4", "5"), false);
+			assert.equal(g.containsEdge("7", "8"), false);
+		});
+
+		it('graph should still contain other edges', function() {
+			assert.equal(g.containsEdge("6", "7"), true);
+		});
+
+		it('even after we insert the nodes back, graph should not contain edges with deleted nodes', function() {
+			assert.equal(g.containsEdge("1", "2"), false);
+			assert.equal(g.containsEdge("3", "5"), false);
+			assert.equal(g.containsEdge("4", "5"), false);
+			assert.equal(g.containsEdge("7", "8"), false);
+		});
+	});
+
 	describe('#removeEdge', function() {
 		const existingEdgesToRemove = [
 			{
@@ -264,6 +328,10 @@ describe('Graph', function() {
 				to: "6",
 			},
 		];
+
+		before(function() {
+			resetGraph();
+		});
 
 		it('should return false if the edge did not exist', function() {
                         assert.equal(g.removeEdge("1", "3"), false);
