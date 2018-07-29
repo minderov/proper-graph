@@ -25,6 +25,24 @@ class Graph {
 		return this.edges.remove(fromVal, toVal);
 	}
 
+	removeNode(value) {
+		if (!this.contains(value)) {
+			return false;
+		}
+
+		const node = this.nodes.get(value);
+
+		const adjacentNodes = node.adjacentNodes();
+
+		for (let i = 0; i < adjacentNodes.length; i++) {
+			this.removeEdge(adjacentNodes[i].value, node.value);
+		}
+
+		this.nodes.delete(value);
+
+		return true;
+	}
+
 	addNode(value) {
 		// TODO: check if node already exists
 
