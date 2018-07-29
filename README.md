@@ -23,7 +23,7 @@ g.addEdge("3", "4");
 g.addEdge("4", "5");
 // g: ("3")-("4")-("5")
 
-g.shortestPath("3", "5"); // returns { nodes: ["3", "4", "5"], length: 3 }
+g.shortestPath("3", "5"); // returns { nodes: ["3", "4", "5"], length: 2 }
 ```
 
 ## Methods
@@ -148,7 +148,7 @@ g.addNode("1");
 
 
 ### `.shortestPath(node1, node2)`
-Returns an object that contains the nodes that comprise the shortest path between the two nodes, and the path's length.
+Returns an object that contains the nodes that comprise the shortest path between the two nodes, and the path's length (number of edges).
 
 Example:
 ```javascript
@@ -178,19 +178,19 @@ let path;
 path = g.shortestPath("1", "5"); 
 // path: {
 //     nodes: ["1", "5"],
-//     length: 2
+//     length: 1
 // }
 
 path = g.shortestPath("1", "4"); 
 // path: {
 //     nodes: ["1", "5", "4"],
-//     length: 3
+//     length: 2
 // }
 
 path = g.shortestPath("1", "3"); 
 // path: {
 //     nodes: ["1", "2", "3"],
-//     length: 3
+//     length: 2
 // }
 
 // note that there is no path between the nodes "1" and "77"

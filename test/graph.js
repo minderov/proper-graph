@@ -103,19 +103,19 @@ describe('Graph', function() {
 					from: "1",
 					to: "2",
 					nodes: ["1", "2"],
-					length: 2
+					length: 1
 				},
 				{
 					from: "3",
 					to: "5",
 					nodes: ["3", "5"],
-					length: 2
+					length: 1
 				},
 				{
 					from: "3",
 					to: "7",
 					nodes: ["3", "5", "6", "7"],
-					length: 4
+					length: 3
 				},
 
 			];

@@ -106,7 +106,7 @@ class Graph {
 			if (node.value === toVal) {
 				return {
 					nodes: pathTo[node.value],
-					length: pathTo[node.value].length
+					length: pathTo[node.value].length - 1
 				}
 			}
 		}
