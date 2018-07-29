@@ -187,6 +187,49 @@ g.containsEdge("2", "4"); // returns false
 ```
 
 
+### `.removeEdge(node1, node2)`
+Removes the edge between the two nodes. Returns `false` if the edge does not exist, and `true` otherwise.
+
+Example:
+```javascript
+const g = new Graph();
+
+g.addNode("1");
+g.addNode("2");
+g.addNode("3");
+g.addNode("4");
+g.addNode("5");
+
+g.addEdge("1", "2");
+g.addEdge("2", "3");
+g.addEdge("3", "4");
+g.addEdge("4", "5");
+g.addEdge("1", "5");
+
+// g:
+// ("1")-("2")
+//   |      \
+//   |     ("3")
+//   |      /
+// ("5")-("4")
+
+g.removeEdge("1", "3"); // returns false because there is no such edge
+g.removeEdge("2", "4"); // returns false because there is no such edge
+
+g.removeEdge("1", "2"); // returns true
+g.removeEdge("1", "5"); // returns true
+
+// g:
+// ("1") ("2")
+//          \
+//         ("3")
+//          /
+// ("5")-("4")
+
+g.removeEdge("1", "2"); // returns false because the edge does not exist anymore, hence there is nothing to remove
+```
+
+
 ### `.BFS(fromNode)`
 A generator that iterates over every node that is connected to `node`
 
