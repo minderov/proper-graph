@@ -21,6 +21,10 @@ class Graph {
 		to.addEdgeTo(from);
 	}
 
+	removeEdge(fromVal, toVal) {
+		return this.edges.remove(fromVal, toVal);
+	}
+
 	addNode(value) {
 		// TODO: check if node already exists
 
