@@ -69,14 +69,16 @@ const g = new Graph();
 g.addNode("1");
 g.addNode("2");
 g.addNode("3");
+g.addNode("4");
 
 g.addEdge("1", "2");
-// nodes "1" and "2" are now connected, 
-// g: ("1")-("2") ("3") 
-// note that the node "3" is not connected to the rest
+g.addEdge("2", "3");
+// nodes "1", "2" and "3" are now connected, 
+// g: ("1")-("2")-("3") ("4") 
+// note that the node "4" is not connected to the rest
 
-g.areConnected("1", "2"); // returns true
-g.areConnected("2", "3"); // returns false
+g.areConnected("1", "3"); // returns true
+g.areConnected("3", "4"); // returns false
 ```
 
 
