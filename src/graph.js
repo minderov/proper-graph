@@ -3,10 +3,15 @@ const Edge = require('./edge.js');
 const Edges = require('./edges.js');
 
 class Graph {
-	constructor() {
-		this.edges = new Edges();
+	constructor({directed = false} = {}) {
+		this.directed = directed;
+
+		this.edges = new Edges({
+			directed: this.directed
+		});
 		this.nodes = new Map();
 		this.shortestPaths = {};
+
 	}
 
 	addEdge(fromVal, toVal) {
@@ -18,7 +23,12 @@ class Graph {
 		this.edges.add(fromVal, toVal);
 
 		from.addEdgeTo(to);
-		to.addEdgeTo(from);
+		to.addEdgeFrom(from);
+
+		if (!this.directed) {
+			to.addEdgeTo(from);
+			from.addEdgeFrom(to);
+		}
 	}
 
 	removeEdge(fromVal, toVal) {
@@ -36,6 +46,10 @@ class Graph {
 
 		for (let i = 0; i < adjacentNodes.length; i++) {
 			this.removeEdge(adjacentNodes[i].value, node.value);
+
+			if (this.directed) {
+				this.removeEdge(node.value, adjacentNodes[i].value);
+			}
 		}
 
 		this.nodes.delete(value);
@@ -47,6 +61,18 @@ class Graph {
 		// TODO: check if node already exists
 
 		this.nodes.set(value, new Node(value));
+	}
+
+	incomingNodes(value) {
+		// TODO: check if node exists
+
+		return this.nodes.get(value).incomingNodes().map(n => n.value);
+	}
+
+	outgoingNodes(value) {
+		// TODO: check if node exists
+
+		return this.nodes.get(value).outgoingNodes().map(n => n.value);
 	}
 
 	contains(value) {
@@ -62,7 +88,15 @@ class Graph {
 	}
 
 	areConnected(fromVal, toVal) {
-		return this.shortestPath(fromVal, toVal).length > 0;
+		const directedPathExists = this.shortestPath(fromVal, toVal).length !== undefined;
+
+		if (!directedPathExists && this.directed) {
+			const reverseDirectedPathExists = this.shortestPath(toVal, fromVal).length !== undefined;
+
+			return reverseDirectedPathExists;
+		}
+
+		return directedPathExists;
 	}
 
 	* BFS(fromVal) {
@@ -84,9 +118,9 @@ class Graph {
 
 			yield node;
 
-			const adjacentNodes = node.adjacentNodes();
-			adjacentNodes.map(n => n.parent = node);
-			queue = queue.concat(adjacentNodes);
+			const outgoingNodes = node.outgoingNodes();
+			outgoingNodes.map(n => n.parent = node);
+			queue = queue.concat(outgoingNodes);
 		}
 	}
 

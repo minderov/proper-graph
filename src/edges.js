@@ -1,7 +1,8 @@
 const Edge = require('./edge.js');
 
 class Edges {
-	constructor() {
+	constructor(params) {
+		this.directed = params.directed;
 		this.edges = {};
 	}
 	
@@ -16,17 +17,21 @@ class Edges {
 	}
 
 	getPossibleHashes(fromVal, toVal) {
-		const possibleHashes = [
+		let possibleHashes = [
 		{
 			hash: (new Edge(fromVal, toVal)).hash,
 			from: fromVal,
 			to: toVal
-		},
-		{
-			hash: (new Edge(toVal, fromVal)).hash,
-			from: toVal,
-			to: fromVal
 		}];
+
+		// if not directed, add the reverse edge
+		if (!this.directed) {
+			possibleHashes.push({
+				hash: (new Edge(toVal, fromVal)).hash,
+				from: toVal,
+				to: fromVal
+			});
+		}
 
 		return possibleHashes;
 	}

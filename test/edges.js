@@ -3,7 +3,9 @@ const Edges = require('../src/edges.js');
 const assert = require('assert');
 
 describe('Edges', function() {
-	const edges = new Edges();
+	const edges = new Edges({
+		directed: false
+	});
 
 	before('Add edges', function() {
 		edges.add("1", "2");
