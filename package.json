@@ -1,7 +1,7 @@
 {
   "scripts": {
     "test": "mocha",
-    "build-for-browser": "browserify src/graph.js -t [ babelify --presets [ '@babel/preset-env' ] ] | uglifyjs > browser/proper-graph.js"
+    "build-for-browser": "browserify browser/polyfill.min.js src/graph.js --noparse=browser/polyfill.min.js --standalone ProperGraph -t [ babelify --presets [ '@babel/preset-env' ] ] | uglifyjs > browser/proper-graph.min.js"
   },
   "name": "proper-graph",
   "version": "2.3.1",
