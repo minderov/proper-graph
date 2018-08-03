@@ -17,6 +17,10 @@ class Graph {
 	}
 
 	addEdge(fromVal, toVal, weight) {
+		if (this.weighted && (typeof weight !== 'number' || isNaN(weight))) {
+			throw new TypeError(`Edge weight must be a number, you provided ${weight}, which is of type '${typeof weight}'`);
+		}
+
 		// TODO: check if edge already exists
 		// TODO: check if nodes exist?
 		const from = this.nodes.get(fromVal);
