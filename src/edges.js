@@ -3,11 +3,12 @@ const Edge = require('./edge.js');
 class Edges {
 	constructor(params) {
 		this.directed = params.directed;
+		this.weighted = params.weighted;
 		this.edges = {};
 	}
 	
-	add(fromVal, toVal) {
-		const edge = new Edge(fromVal, toVal);
+	add(fromVal, toVal, weight) {
+		const edge = new Edge(fromVal, toVal, weight);
 
 		if (!this.edges[edge.hash]) {
 			this.edges[edge.hash] = [];

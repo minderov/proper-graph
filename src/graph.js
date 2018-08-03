@@ -3,24 +3,26 @@ const Edge = require('./edge.js');
 const Edges = require('./edges.js');
 
 class Graph {
-	constructor({directed = false} = {}) {
+	constructor({directed = false, weighted = false} = {}) {
 		this.directed = directed;
+		this.weighted = weighted;
 
 		this.edges = new Edges({
-			directed: this.directed
+			directed: this.directed,
+			weighted: this.weighted
 		});
 		this.nodes = new Map();
 		this.shortestPaths = {};
 
 	}
 
-	addEdge(fromVal, toVal) {
+	addEdge(fromVal, toVal, weight) {
 		// TODO: check if edge already exists
 		// TODO: check if nodes exist?
 		const from = this.nodes.get(fromVal);
 		const to = this.nodes.get(toVal);
 
-		this.edges.add(fromVal, toVal);
+		this.edges.add(fromVal, toVal, weight);
 
 		from.addEdgeTo(to);
 		to.addEdgeFrom(from);
