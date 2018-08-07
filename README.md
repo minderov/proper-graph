@@ -68,7 +68,7 @@ g.addNode("Singapore");
 // add prices for flight tickets between cities
 g.addEdge("New York City", "Singapore", 1500);
 g.addEdge("New York City", "Toronto", 100);
-g.addEdge("Toronto", "San Francisco", 250);
+g.addEdge("Toronto", "San Francisco", 280);
 g.addEdge("Toronto", "Tokyo", 640);
 g.addEdge("Tokyo", "Singapore", 170);
 g.addEdge("San Francisco", "Tokyo", 400);
@@ -76,7 +76,7 @@ g.addEdge("San Francisco", "Singapore", 550);
 
 // g: ("Tokyo")<--- 640 ---("Toronto")<--- 100 ----("New York City")
 //      |   /\                |                         /
-//      |    \               250                       /
+//      |    \               280                       /
 //      |    400              |                       / 
 //     170     \              V                      /
 //      |      ("San Francisco")                    /    
