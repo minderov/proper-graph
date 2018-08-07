@@ -4,7 +4,7 @@
     "build-for-browser": "browserify browser/polyfill.min.js src/graph.js --noparse=browser/polyfill.min.js --standalone Graph -t [ babelify --presets [ '@babel/preset-env' ] ] | uglifyjs > browser/proper-graph.min.js"
   },
   "name": "proper-graph",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "description": "A library that aims to make graphs easy to use",
   "main": "src/graph.js",
   "dependencies": {},
