@@ -647,7 +647,7 @@ g.removeEdge("1", "5"); // returns true
 </details>
 
 
-### `.BFS(fromNode)`
+### `.iterateFrom(fromNode)`
 A generator that iterates over every node that is connected to `node`
 
 Example:
@@ -674,7 +674,7 @@ g.addEdge("1", "5");
 //   |      /
 // ("5")-("4")      ("77")
    
-for (const node of g.BFS("1")) {
+for (const node of g.iterateFrom("1")) {
    console.log(`Node: ${node}`);
 }
 
@@ -722,7 +722,7 @@ g.addEdge("1", "5");
 //   V              V
 // ("5")<---------("4")
 
-for (const node of g.BFS("1")) {
+for (const node of g.iterateFrom("1")) {
    console.log(`Node: ${node}`);
 }
 
@@ -734,7 +734,7 @@ for (const node of g.BFS("1")) {
 // Node: 4
 
 
-for (const node of g.BFS("3")) {
+for (const node of g.iterateFrom("3")) {
    console.log(`Node: ${node}`);
 }
 

@@ -130,6 +130,11 @@ class Graph {
 		}
 	}
 
+	// alias for *BFS
+	iterateFrom(fromVal) {
+		return this.BFS(fromVal);
+	}
+
 	_shortestPathNotWeighted(fromVal, toVal) {
 		const from = this.nodes.get(fromVal);
 

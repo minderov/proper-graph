@@ -159,7 +159,7 @@ describe('Directed Graph', function() {
 		});
 	});
 
-	describe('#*BFS', function() {
+	function testBFSAlias(aliasName) {
 		it('should return a correct sequence', function() {
 			const correctSequenceFrom = {
 				"11": ["11", "22", "33", "44", "55", "99", "66", "777", "77", "88"],
@@ -174,14 +174,28 @@ describe('Directed Graph', function() {
 				const sequence = correctSequenceFrom[from];
 				let i = 0;
 
-				for (node of g.BFS(from)) {
+				for (node of g[aliasName](from)) {
 					assert.equal(node.value, sequence[i++]);
 				}
 
-				assert.equal(i, sequence.length, "*BFS() did not list all the nodes");
+				assert.equal(i, sequence.length, "did not list all the nodes");
 			}
 
 		});
+	};
+
+	describe('#*BFS', function() {
+		before(resetGraph);
+
+		const aliases = ["BFS", "iterateFrom"];
+
+		for (let i = 0; i < aliases.length; i++) {
+			const alias = aliases[i];
+
+			describe(`should work when called as g.${alias}()`, function() {
+				testBFSAlias(alias);
+			});
+		}
 	});
 
 	describe('#areConnected', function() {

@@ -134,7 +134,7 @@ describe('Graph', function() {
 		});
 	});
 
-	describe('#*BFS', function() {
+	function testBFSAlias(aliasName) {
 		it('should return a correct sequence', function() {
 			const correctSequenceFrom = {
 				"1": ["1", "2"],
@@ -149,7 +149,7 @@ describe('Graph', function() {
 				const sequence = correctSequenceFrom[from];
 				let i = 0;
 
-				for (node of g.BFS(from)) {
+				for (node of g[aliasName](from)) {
 					assert.equal(node.value, sequence[i++]);
 				}
 
@@ -157,6 +157,20 @@ describe('Graph', function() {
 			}
 
 		});
+	};
+
+	describe('#*BFS', function() {
+		before(resetGraph);
+
+		const aliases = ["BFS", "iterateFrom"];
+
+		for (let i = 0; i < aliases.length; i++) {
+			const alias = aliases[i];
+
+			describe(`should work when called as g.${alias}()`, function() {
+				testBFSAlias(alias);
+			});
+		}
 	});
 
 	describe('#containsEdge', function() {
