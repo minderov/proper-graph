@@ -27,6 +27,8 @@ npm install --save proper-graph
 
 
 ## Usage
+
+### Simple example
 ```javascript
 const Graph = require('proper-graph');
 
@@ -46,6 +48,63 @@ g.addEdge("4", "5");
 g.shortestPath("3", "5"); // returns { nodes: ["3", "4", "5"], length: 2 }
 ```
 
+### "Real world" example: calculate the cheapest flight ticket between two cities
+
+```javascript
+const Graph = require('proper-graph');
+
+const g = new Graph({
+   directed: true,
+   weighted: true
+});
+
+// add cities
+g.addNode("Tokyo");
+g.addNode("San Francisco");
+g.addNode("Toronto");
+g.addNode("New York City");
+g.addNode("Singapore");
+
+// add prices for flight tickets between cities
+g.addEdge("New York City", "Singapore", 1500);
+g.addEdge("New York City", "Toronto", 100);
+g.addEdge("Toronto", "San Francisco", 250);
+g.addEdge("Toronto", "Tokyo", 640);
+g.addEdge("Tokyo", "Singapore", 170);
+g.addEdge("San Francisco", "Tokyo", 400);
+g.addEdge("San Francisco", "Singapore", 550);
+
+// g: ("Tokyo")<--- 640 ---("Toronto")<--- 100 ----("New York City")
+//      |   /\                |                         /
+//      |    \               250                       /
+//      |    400              |                       / 
+//     170     \              V                      /
+//      |      ("San Francisco")                    /    
+//      |        |                               1500
+//      |       550                              /
+//      |        |                              /
+//      V        V                             /
+//    ("Singapore")<--------------------------
+
+
+// Now this is too complicated, I just want to know what is 
+// the cheapest way to get from New York City to Singapore...
+// Is it the $1500 direct flight?
+
+g.shortestPath("New York City", "Singapore"); 
+// returns { nodes: ["New York City", "Toronto", "Tokyo", "Singapore"], length: 910 }
+
+// Just $910 if we go through Toronto and Tokyo, I almost payed $1500. 
+// So much money saved, thanks proper-graph!
+
+// How about from San Francisco to Singapore? Should I go through Tokyo?
+
+g.shortestPath("San Francisco", "Singapore");
+// returns { nodes: ["San Francisco", "Singapore"], length: 550 }
+
+// Nope, the direct flight is the cheapest this time, proper-graph saves the day again!
+```
+
 
 ## Methods
 ### `.addNode(node)`
@@ -62,8 +121,8 @@ g.addNode("Alice");
 ```
 
 
-### `.addEdge(node1, node2)`
-Adds an edge between the two nodes.
+### `.addEdge(node1, node2[, weight])`
+Adds an edge between the two nodes. The third parameter `weight` is only for weighted graphs.
 
 Example:
 ```javascript
@@ -107,6 +166,38 @@ g.addEdge("2", "1");
 ```
 </details>
 
+
+
+<details>
+   <summary> Click to see a description for weighted graph:</summary>
+
+
+For weighted graphs it adds an edge from `node1` to `node2` with weight `weight`. 
+
+Weight is a number. Can be negative, float, or even `Infinity`.
+
+Example:
+
+```javascript
+const g = new Graph({
+   directed: true,
+   weighted: true
+});
+
+g.addNode("1");
+g.addNode("2");
+g.addNode("3");
+
+// adds an edge from "1" to "2"
+g.addEdge("1", "2", 5);
+// g: ("1")- 5 ->("2") ("3")
+
+// adds an edge from "2" to "1"
+g.addEdge("2", "3", -10);
+// g: ("1")- 5 ->("2")- -10 ->("3")
+
+```
+</details>
 
 ### `.areConnected(node1, node2)`
 Returns `true` if there is a path between the nodes, and `false` otherwise.
@@ -335,6 +426,57 @@ path = g.shortestPath("3", "2");
 ```
 </details>
 
+
+
+<details>
+   <summary> Click to see a description for weighted graph:</summary>
+
+Returns an object that contains the nodes that comprise the shortest path between the two nodes, and the path's length (sum of weights of edges in the path).
+
+Example:
+
+```javascript
+const g = new Graph({
+   directed: true,
+   weighted: true
+});
+
+g.addNode("1");
+g.addNode("2");
+g.addNode("3");
+g.addNode("4");
+g.addNode("5");
+
+g.addEdge("1", "2", 1);
+g.addEdge("2", "3", 2);
+g.addEdge("3", "4", 5);
+g.addEdge("4", "5", -6);
+g.addEdge("1", "5", 3);
+
+// g:
+// ("1")- 1 ->("2")- 2 ->("3")
+//   |                     |
+//   3                     5
+//   |                     |
+//   V                     V
+// ("5")<------ -6 ------("4")
+
+let path;
+path = g.shortestPath("1", "4"); 
+// path: {
+//     nodes: ["1", "2", "3", "4"],
+//     length: 8
+// }
+
+path = g.shortestPath("1", "5"); 
+// path: {
+//     nodes: ["1", "2", "3", "4", "5"],
+//     length: 2
+// }
+// note that it's cheaper to go all the way around instead of taking the direct edge "1"->"5"
+
+```
+</details>
 
 ### `.containsEdge(node1, node2)`
 Returns `true` if the graph has an edge between the two nodes, and `false` otherwise
