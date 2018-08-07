@@ -147,6 +147,30 @@ describe('Weighted Graph', function() {
 		});
 	});
 
+	describe('#areConnected', function() {
+		before(resetGraph);
+
+		it('should return false if the nodes are not connected', function() {
+			assert.equal(g.areConnected("33", "000"), false);
+
+			assert.equal(g.areConnected("000", "11"), false);
+		});
+
+		it('should return true if there is a direct path node1->node2', function() {
+			assert.equal(g.areConnected("11", "777"), true);
+
+			assert.equal(g.areConnected("99", "44"), true);
+
+			assert.equal(g.areConnected("55", "88"), true);
+		});
+
+		it('should return true even if path node1->node2 does not exist, but node2->node1 does', function() {
+			assert.equal(g.areConnected("777", "11"), true);
+
+			assert.equal(g.areConnected("777", "99"), true);
+		});
+	});
+
 	describe('#shortestPath', function() {
 		before(resetGraph);
 
