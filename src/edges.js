@@ -17,6 +17,16 @@ class Edges {
 		this.edges[edge.hash].push(edge);
 	}
 
+	getAll() {
+		let allEdges = [];
+
+		for (const hash in this.edges) {
+			allEdges = allEdges.concat(this.edges[hash]);
+		}
+
+		return allEdges;
+	}
+
 	getPossibleHashes(fromVal, toVal) {
 		let possibleHashes = [
 		{

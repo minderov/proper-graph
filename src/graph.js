@@ -130,10 +130,7 @@ class Graph {
 		}
 	}
 
-	shortestPath(fromVal, toVal) {
-		// TODO: check if the nodes exist
-		// TODO: check if the shortest path was already calculated
-
+	_shortestPathNotWeighted(fromVal, toVal) {
 		const from = this.nodes.get(fromVal);
 
 		const pathTo = {};
@@ -155,6 +152,82 @@ class Graph {
 			nodes: [],
 			length: undefined
 		};
+	}
+
+	_shortestPathWeighted(fromVal, toVal) {
+		const allEdges = this.edges.getAll();
+
+		const distanceTo = {};
+		const predecessorOf = {};
+
+		this.nodes.forEach(function(value, key) {
+			distanceTo[key] = Infinity;
+			predecessorOf[key] = null;
+		});
+
+		distanceTo[fromVal] = 0;
+
+		for (let i = 0; i < this.nodes.size; i++) {
+			let changedPredecessor = false;
+
+			for (let j = 0; j < allEdges.length; j++) {
+				const edge = allEdges[j];
+
+				if (distanceTo[edge.from] + edge.weight < distanceTo[edge.to]) {
+					distanceTo[edge.to] = distanceTo[edge.from] + edge.weight;
+					predecessorOf[edge.to] = edge.from;
+
+					changedPredecessor = true;
+				}
+			}
+
+			if (!changedPredecessor) {
+				break;
+			}
+		}
+
+		// TODO: check for negative-weight cycles
+
+		if (predecessorOf[toVal] === null) {
+			// no path from fromVal to toVal exists
+
+			return {
+				nodes: [],
+				length: undefined
+			};
+		}
+
+		const shortestPath = {
+			nodes: [],
+			length: distanceTo[toVal]
+		};
+
+		let predecessor = predecessorOf[toVal];
+
+		shortestPath.nodes.push(toVal);
+
+		while (predecessor !== fromVal) {
+			shortestPath.nodes.push(predecessor);
+
+			predecessor = predecessorOf[predecessor];
+		}
+
+		shortestPath.nodes.push(fromVal);
+
+		shortestPath.nodes.reverse();
+
+		return shortestPath;
+	}
+
+	shortestPath(fromVal, toVal) {
+		// TODO: check if the nodes exist
+		// TODO: check if the shortest path was already calculated
+
+		if (this.weighted) {
+			return this._shortestPathWeighted(fromVal, toVal);	
+		} else {
+			return this._shortestPathNotWeighted(fromVal, toVal);
+		}
 	}
 }
 
