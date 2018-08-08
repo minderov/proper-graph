@@ -16,7 +16,7 @@ npm install --save proper-graph
 ### Browser
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/proper-graph@2.3.3/browser/proper-graph.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/proper-graph@2.5.1/browser/proper-graph.min.js"></script>
 
 <script>
    var g = new Graph();
