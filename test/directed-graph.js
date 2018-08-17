@@ -54,6 +54,10 @@ describe('Directed Graph', function() {
 	{
 		from: "55",
 		to: "777"
+	},
+	{
+		from: "888",
+		to: "777"
 	}];
 
 	let g;
@@ -73,6 +77,7 @@ describe('Directed Graph', function() {
 		g.addNode("88");
 		g.addNode("99");
 		g.addNode("777");
+		g.addNode("888");
 		g.addNode("000");
 
 		for (let i = 0; i < existingEdges.length; i++) {
@@ -89,10 +94,43 @@ describe('Directed Graph', function() {
 		// ("99")<---------------->("44") 
 		//  /|\                      |
 		//   |                       V
-		// ("88")<-("77")<-("66")<-("55")---->("777")
+		// ("88")<-("77")<-("66")<-("55")---->("777")<----("888")
 	}
 
 	before(resetGraph);
+
+	describe('#incomingNodes', function() {
+		before(resetGraph);
+
+		it('should return correct nodes if there are any', function() {
+			const correctIncomingNodes = {
+				"11": ["99"],
+				"33": ["11", "22"],
+				"44": ["33", "99"],
+				"99": ["88", "44"],
+				"777": ["55", "888"],
+			};
+
+			for (const nodeValue in correctIncomingNodes) {
+				const correctValues = correctIncomingNodes[nodeValue];
+				const returnedValues = g.incomingNodes(nodeValue);
+
+				// sort before checking because order doesn't matter
+				correctValues.sort();
+				returnedValues.sort();
+
+				assert.deepEqual(correctValues, returnedValues);
+			}
+		});
+
+		it('should return empty array if there are no incoming nodes', function() {
+			const lonelyNodes = ["000", "888"];
+
+			for (nodeValue of lonelyNodes) {
+				assert.deepEqual(g.incomingNodes(nodeValue), []);
+			}
+		});
+	});
 
 	describe('#containsEdge', function() {
 		it('should return true for existing edges', function() {
@@ -215,45 +253,6 @@ describe('Directed Graph', function() {
 
 		it('should return true even if path node1->node2 does not exist, but node2->node1 does', function() {
 			assert.equal(g.areConnected("777", "11"), true);
-		});
-	});
-
-	describe('#incomingNodes', function() {
-		it('should return empty array if there are no incoming nodes', function() {
-			assert.deepEqual(g.incomingNodes("000"), []);
-		});
-
-		it('should return correct incoming nodes', function() {
-			const correctIncomingNodes = [
-			{
-				to: "11",
-				nodes: ["99"]
-			},
-			{
-				to: "33",
-				nodes: ["11", "22"]
-			},
-			{
-				to: "99",
-				nodes: ["44", "88"]
-			},
-			{
-				to: "777",
-				nodes: ["55"]
-			},
-			{
-				to: "22",
-				nodes: ["11"] 
-			},
-			{
-				to: "44",
-				nodes: ["33", "99"]
-			},
-			];
-
-			for (let i = 0; i < correctIncomingNodes.length; i++) {
-				assert.deepEqual(g.incomingNodes(correctIncomingNodes[i].to), correctIncomingNodes[i].nodes);
-			}
 		});
 	});
 

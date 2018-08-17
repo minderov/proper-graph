@@ -33,6 +33,40 @@ describe('Graph', function() {
 		resetGraph();
 	});
 
+	describe('#incomingNodes', function() {
+		before(resetGraph);
+
+		it('should return correct nodes if there are any', function() {
+			const correctIncomingNodes = {
+				"1": ["2"],
+				"2": ["1"],
+				"3": ["4", "5"],
+				"5": ["3", "4", "6"],
+				"7": ["6", "8"],
+				"8": ["7"],
+			};
+
+			for (const nodeValue in correctIncomingNodes) {
+				const correctValues = correctIncomingNodes[nodeValue];
+				const returnedValues = g.incomingNodes(nodeValue);
+
+				// sort before checking because order doesn't matter
+				correctValues.sort();
+				returnedValues.sort();
+
+				assert.deepEqual(correctValues, returnedValues);
+			}
+		});
+
+		it('should return empty array if there are no incoming nodes', function() {
+			const lonelyNodes = ["999", "1000"];
+
+			for (nodeValue of lonelyNodes) {
+				assert.deepEqual(g.incomingNodes(nodeValue), []);
+			}
+		});
+	});
+
 	describe('#getNodeByValue', function() {
 		describe('#adjacentNodes', function() {
 			it('should return correct number of nodes', function() {
