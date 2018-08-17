@@ -78,7 +78,9 @@ class Graph {
 	}
 
 	outgoingNodes(value) {
-		// TODO: check if node exists
+		if (!this.contains(value)) {
+			throw new ReferenceError(`Trying to check outgoingNodes for a non-existing node ${value}`);
+		}
 
 		return this.nodes.get(value).outgoingNodes().map(n => n.value);
 	}

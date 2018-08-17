@@ -2,6 +2,7 @@ const Graph = require('../src/graph.js');
 const assert = require('assert');
 
 describe('Directed Graph', function() {
+	const nonExistingNodes = ["15", 11, 0, "8", undefined, null, Infinity, NaN, -0];
 	const existingEdges = [
 	{
 		from: "11",
@@ -132,10 +133,47 @@ describe('Directed Graph', function() {
 		});
 
 		it('should throw ReferenceError if there is no such node', function() {
-			const nonExistingNodes = ["15", 11, 0, "8", undefined, null, Infinity, NaN, -0];
-
 			for (nodeValue of nonExistingNodes) {
 				assert.throws(() => g.incomingNodes(nodeValue), ReferenceError);
+			}
+		});
+	});
+
+	describe('#outgoingNodes', function() {
+		before(resetGraph);
+
+		it('should return correct nodes if there are any', function() {
+			const correctOutgoingNodes = {
+				"22": ["33"],
+				"11": ["22", "33"],
+				"99": ["11", "44"],
+				"44": ["55", "99"],
+				"55": ["66", "777"],
+			};
+
+			for (const nodeValue in correctOutgoingNodes) {
+				const correctValues = correctOutgoingNodes[nodeValue];
+				const returnedValues = g.outgoingNodes(nodeValue);
+
+				// sort before checking because order doesn't matter
+				correctValues.sort();
+				returnedValues.sort();
+
+				assert.deepEqual(correctValues, returnedValues);
+			}
+		});
+
+		it('should return empty array if there are no incoming nodes', function() {
+			const lonelyNodes = ["000", "777"];
+
+			for (nodeValue of lonelyNodes) {
+				assert.deepEqual(g.outgoingNodes(nodeValue), []);
+			}
+		});
+
+		it('should throw ReferenceError if there is no such node', function() {
+			for (nodeValue of nonExistingNodes) {
+				assert.throws(() => g.outgoingNodes(nodeValue), ReferenceError);
 			}
 		});
 	});
@@ -167,41 +205,6 @@ describe('Directed Graph', function() {
 			assert.equal(g.containsEdge("77", "66"), false);
 
 			assert.equal(g.containsEdge("33", "11"), false);
-		});
-	});
-
-	describe('#outgoingNodes', function() {
-		it('should return empty array if there are no outgoing nodes', function() {
-			const nodesWithNoOutgoingNodes = ["000", "777"];
-
-			for (let i = 0; i < nodesWithNoOutgoingNodes.length; i++) {
-				assert.deepEqual(g.outgoingNodes(nodesWithNoOutgoingNodes[i]), []);
-			}
-		});
-
-		it('should return correct outgoing nodes', function() {
-			const correctOutgoingNodes = [
-			{
-				from: "22",
-				nodes: ["33"]
-			},
-			{
-				from: "11",
-				nodes: ["22", "33"]
-			},
-			{
-				from: "99",
-				nodes: ["11", "44"]
-			},
-			{
-				from: "44",
-				nodes: ["55", "99"]
-			}
-			];
-
-			for (let i = 0; i < correctOutgoingNodes.length; i++) {
-				assert.deepEqual(g.outgoingNodes(correctOutgoingNodes[i].from), correctOutgoingNodes[i].nodes);
-			}
 		});
 	});
 

@@ -2,6 +2,8 @@ const Graph = require('../src/graph.js');
 const assert = require('assert');
 
 describe('Graph', function() {
+	const nonExistingNodes = ["10", 0, 1, "99", undefined, null, Infinity, NaN, -0];
+
 	let g;
 
 	function resetGraph() {
@@ -67,10 +69,48 @@ describe('Graph', function() {
 		});
 
 		it('should throw ReferenceError if there is no such node', function() {
-			const nonExistingNodes = ["10", 0, 1, "99", undefined, null, Infinity, NaN, -0];
-
 			for (nodeValue of nonExistingNodes) {
 				assert.throws(() => g.incomingNodes(nodeValue), ReferenceError);
+			}
+		});
+	});
+
+	describe('#outgoingNodes', function() {
+		before(resetGraph);
+
+		it('should return correct nodes if there are any', function() {
+			const correctOutgoingNodes = {
+				"1": ["2"],
+				"2": ["1"],
+				"3": ["4", "5"],
+				"5": ["3", "4", "6"],
+				"7": ["6", "8"],
+				"8": ["7"],
+			};
+
+			for (const nodeValue in correctOutgoingNodes) {
+				const correctValues = correctOutgoingNodes[nodeValue];
+				const returnedValues = g.outgoingNodes(nodeValue);
+
+				// sort before checking because order doesn't matter
+				correctValues.sort();
+				returnedValues.sort();
+
+				assert.deepEqual(correctValues, returnedValues);
+			}
+		});
+
+		it('should return empty array if there are no incoming nodes', function() {
+			const lonelyNodes = ["999", "1000"];
+
+			for (nodeValue of lonelyNodes) {
+				assert.deepEqual(g.outgoingNodes(nodeValue), []);
+			}
+		});
+
+		it('should throw ReferenceError if there is no such node', function() {
+			for (nodeValue of nonExistingNodes) {
+				assert.throws(() => g.outgoingNodes(nodeValue), ReferenceError);
 			}
 		});
 	});
