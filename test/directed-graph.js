@@ -130,6 +130,14 @@ describe('Directed Graph', function() {
 				assert.deepEqual(g.incomingNodes(nodeValue), []);
 			}
 		});
+
+		it('should throw ReferenceError if there is no such node', function() {
+			const nonExistingNodes = ["15", 11, 0, "8", undefined, null, Infinity, NaN, -0];
+
+			for (nodeValue of nonExistingNodes) {
+				assert.throws(() => g.incomingNodes(nodeValue), ReferenceError);
+			}
+		});
 	});
 
 	describe('#containsEdge', function() {

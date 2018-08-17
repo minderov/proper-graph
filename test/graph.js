@@ -65,6 +65,14 @@ describe('Graph', function() {
 				assert.deepEqual(g.incomingNodes(nodeValue), []);
 			}
 		});
+
+		it('should throw ReferenceError if there is no such node', function() {
+			const nonExistingNodes = ["10", 0, 1, "99", undefined, null, Infinity, NaN, -0];
+
+			for (nodeValue of nonExistingNodes) {
+				assert.throws(() => g.incomingNodes(nodeValue), ReferenceError);
+			}
+		});
 	});
 
 	describe('#getNodeByValue', function() {
