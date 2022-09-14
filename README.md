@@ -94,7 +94,7 @@ g.addEdge("San Francisco", "Singapore", 550);
 g.shortestPath("New York City", "Singapore"); 
 // returns { nodes: ["New York City", "Toronto", "Tokyo", "Singapore"], length: 910 }
 
-// Just $910 if we go through Toronto and Tokyo, I almost payed $1500. 
+// Just $910 if we go through Toronto and Tokyo, I almost paid $1500. 
 // So much money saved, thanks proper-graph!
 
 // How about from San Francisco to Singapore? Should I go through Tokyo?
